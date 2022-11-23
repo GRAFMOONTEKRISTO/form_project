@@ -1,15 +1,27 @@
+{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title> FeedBack </title>
+    <link rel="stylesheet" href="{% static 'feedback/forms.css' %}">
 </head>
 <body>
     <h2> Leave feedback</h2>
     <form action="/" method="post">
         {% csrf_token %}
-        {{ form }}
+
+        {% for field in form %}
+            <div class="form-style {% if field.errors %} errors {% endif %}">
+            {{ field.label_tag }}
+            {{ field.errors }}
+            {{ field }}
+            </div>
+            <br>
+        {% endfor %}
+
         <button> Send </button>
-    </form>
+</form>
 </body>
 </html>
