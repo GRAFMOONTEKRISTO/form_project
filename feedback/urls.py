@@ -1,10 +1,10 @@
 from django.contrib import admin
 from django.urls import path
 
-from .views import index, done,update_feedback
+from .views import done, UpdateFeedbackView, FeedbackView
 
 urlpatterns = [
     path('done', done),
-    path('', index),
-    path('<int:id_feedback>', update_feedback),
+    path('', FeedbackView.as_view()),  # as_view() специальный метод
+    path('<int:id_feedback>', UpdateFeedbackView.as_view()),
 ]
