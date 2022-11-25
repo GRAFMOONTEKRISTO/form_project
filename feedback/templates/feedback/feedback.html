@@ -1,14 +1,11 @@
+{% extends 'feedback/base.html' %}
 {% load static %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title> FeedBack </title>
-    <link rel="stylesheet" href="{% static 'feedback/forms.css' %}">
-</head>
-<body>
-    <h2> Leave feedback</h2>
+
+{% block title %} Page feedbacks {% endblock %}
+
+{% block content %}
+    <h2> LEAVE FEEDBACK </h2>
     <form method="post">
         {% csrf_token %}
 
@@ -22,6 +19,5 @@
         {% endfor %}
 
         <button> Send </button>
-</form>
-</body>
-</html>
+    </form>
+{% endblock %}

@@ -4,6 +4,7 @@ from .forms import FeedbackForm
 from .models import Feedback
 
 from django.views import View
+from django.views.generic.base import TemplateView
 
 
 # Create your views here.
@@ -23,12 +24,12 @@ class FeedbackView(View):
 
 
 class UpdateFeedbackView(View):
-    def get(self, request, id_feedback):  # отвечает за get запросы
+    def get(self, request, id_feedback):  # отвечает за get запросы и нужно прописываться именно get
         feed = Feedback.objects.get(id=id_feedback)
         form = FeedbackForm(instance=feed)
         return render(request, 'feedback/feedback.html', context={'form': form})
 
-    def post(self, request, id_feedback):  # отвечает за post запросы
+    def post(self, request, id_feedback):  # отвечает за post запросы и нужно прописываться именно post
         feed = Feedback.objects.get(id=id_feedback)
         form = FeedbackForm(instance=feed)
         if request.method == 'POST':
@@ -39,8 +40,21 @@ class UpdateFeedbackView(View):
                 return HttpResponseRedirect('/done')
         return render(request, 'feedback/feedback.html', context={'form': form})
 
-def done(request):
-    return render(request, 'feedback/done.html')
+
+class DoneView(View):
+    def get(self, request):  # отвечает за get запросы и нужно прописываться именно get (lesson 7.11)
+        return render(request, 'feedback/done.html')
+
+
+class ListFeedBack(TemplateView):
+    template_name = 'feedback/list_feedback.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+# def done(request):
+# return render(request, 'feedback/done.html')
 
 # 7.5 + addendum 7.9 with cut a codes
 # def index(request):
@@ -68,6 +82,3 @@ def done(request):
 #         form = FeedbackForm(instance=feed)
 #
 #     return render(request, 'feedback/feedback.html', context={'form': form})
-
-
-
